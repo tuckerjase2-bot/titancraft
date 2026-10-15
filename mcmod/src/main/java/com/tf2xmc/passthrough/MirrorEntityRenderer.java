@@ -3,7 +3,7 @@ package com.tf2xmc.passthrough;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.VertexRendering;
+import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
@@ -31,8 +31,8 @@ public class MirrorEntityRenderer extends EntityRenderer<MirrorEntity> {
 
     @Override
     public void render(MirrorEntity entity, float yaw, float tickDelta, MatrixStack matrices,
-                       VertexConsumerProvider vertexConsumers, int light) {
-        super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
+                       VertexConsumerProvider vertexConsumers) {
+        super.render(entity, yaw, tickDelta, matrices, vertexConsumers);
 
         float age = entity.age + tickDelta;
         float pulse = 0.22f + 0.10f * MathHelper.sin(age * 0.25f);
@@ -44,10 +44,10 @@ public class MirrorEntityRenderer extends EntityRenderer<MirrorEntity> {
         Box core = new Box(-0.45, 0.0, -0.45, 0.45, 1.8, 0.45);
 
         VertexConsumer quads = vertexConsumers.getBuffer(RenderLayer.getDebugQuads());
-        VertexRendering.drawBox(matrices, quads, core, R, G, B, pulse);
+        WorldRenderer.drawBox(matrices, quads, core, R, G, B, pulse);
 
         VertexConsumer lines = vertexConsumers.getBuffer(RenderLayer.getDebugLines(2.0));
-        VertexRendering.drawBox(matrices, lines, core, R, G, B, 0.9f);
+        WorldRenderer.drawBox(matrices, lines, core, R, G, B, 0.9f);
 
         matrices.pop();
     }
