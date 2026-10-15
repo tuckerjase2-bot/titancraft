@@ -1,0 +1,108 @@
+{
+    "Name": "tf2xmc.Passthrough",
+    "Description": "Bidirectional sync between Titanfall 2 and Minecraft. Minecraft is the weapon; Titanfall is the target.",
+    "Version": "0.2.0",
+    "LoadPriority": 1,
+    "ConVars": [
+        {
+            "Name": "tf2xmc_relay_host",
+            "DefaultValue": "127.0.0.1",
+            "HelpString": "Relay server hostname or IP address"
+        },
+        {
+            "Name": "tf2xmc_relay_port",
+            "DefaultValue": "25600",
+            "HelpString": "Relay server port"
+        },
+        {
+            "Name": "tf2xmc_sync_rate",
+            "DefaultValue": "20",
+            "HelpString": "State sync rate in Hz"
+        },
+        {
+            "Name": "tf2xmc_auto_connect",
+            "DefaultValue": "1",
+            "HelpString": "Automatically connect to relay on game start"
+        },
+        {
+            "Name": "tf2xmc_smooth_factor",
+            "DefaultValue": "0.3",
+            "HelpString": "Position smoothing factor (0.0-1.0)"
+        },
+        {
+            "Name": "tf2xmc_debug",
+            "DefaultValue": "0",
+            "HelpString": "Enable debug logging"
+        }
+    ],
+    "ConCommands": [
+        {
+            "Name": "tf2xmc_connect",
+            "Function": "Tf2xmc_Connect",
+            "Context": "CLIENT",
+            "HelpString": "Connect to the TF2 x Minecraft relay (client channel)"
+        },
+        {
+            "Name": "tf2xmc_disconnect",
+            "Function": "Tf2xmc_Disconnect",
+            "Context": "CLIENT",
+            "HelpString": "Disconnect from the TF2 x Minecraft relay (client channel)"
+        },
+        {
+            "Name": "tf2xmc_status",
+            "Function": "Tf2xmc_Status",
+            "Context": "CLIENT",
+            "HelpString": "Show TF2 x Minecraft client connection status"
+        },
+        {
+            "Name": "tf2xmc_srv_connect",
+            "Function": "Tf2xmcSrv_Connect",
+            "Context": "SERVER",
+            "HelpString": "Connect the SERVER reverse channel to the relay (MC -> TF2)"
+        },
+        {
+            "Name": "tf2xmc_srv_disconnect",
+            "Function": "Tf2xmcSrv_Disconnect",
+            "Context": "SERVER",
+            "HelpString": "Disconnect the SERVER reverse channel"
+        },
+        {
+            "Name": "tf2xmc_srv_status",
+            "Function": "Tf2xmcSrv_Status",
+            "Context": "SERVER",
+            "HelpString": "Show SERVER reverse channel status"
+        },
+        {
+            "Name": "tf2xmc_srv_test_explode",
+            "Function": "Tf2xmcSrv_TestExplode",
+            "Context": "SERVER",
+            "HelpString": "Debug: apply an MC explosion at the first player's position (tests reverse map + NPC damage)"
+        }
+    ],
+    "Scripts": [
+        {
+            "Path": "vscripts/tf2xmc_client.nut",
+            "RunOn": "CLIENT",
+            "ClientCallback": {
+                "Before": "Tf2xmc_OnBeforeMapSpawn"
+            }
+        },
+        {
+            "Path": "vscripts/tf2xmc_server.nut",
+            "RunOn": "SERVER",
+            "ServerCallback": {
+                "Before": "Tf2xmc_OnBeforeMapSpawn"
+            }
+        },
+        {
+            "Path": "ui/tf2xmc_settings.nut",
+            "RunOn": "UI",
+            "UICallback": {
+                "Before": "Tf2xmc_AddModSettings"
+            }
+        }
+    ],
+    "Localisation": [
+        "resource/tf2xmc_%language%.txt"
+    ]
+}
