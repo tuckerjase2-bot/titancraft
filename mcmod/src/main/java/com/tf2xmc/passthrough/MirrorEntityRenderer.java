@@ -31,8 +31,8 @@ public class MirrorEntityRenderer extends EntityRenderer<MirrorEntity> {
 
     @Override
     public void render(MirrorEntity entity, float yaw, float tickDelta, MatrixStack matrices,
-                       VertexConsumerProvider vertexConsumers) {
-        super.render(entity, yaw, tickDelta, matrices, vertexConsumers);
+                       VertexConsumerProvider vertexConsumers, int light) {
+        super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
 
         float age = entity.age + tickDelta;
         float pulse = 0.22f + 0.10f * MathHelper.sin(age * 0.25f);
@@ -46,8 +46,6 @@ public class MirrorEntityRenderer extends EntityRenderer<MirrorEntity> {
         VertexConsumer quads = vertexConsumers.getBuffer(RenderLayer.getDebugQuads());
         WorldRenderer.drawBox(matrices, quads, core, R, G, B, pulse);
 
-        VertexConsumer lines = vertexConsumers.getBuffer(RenderLayer.getDebugLines(2.0));
-        WorldRenderer.drawBox(matrices, lines, core, R, G, B, 0.9f);
 
         matrices.pop();
     }
